@@ -23,8 +23,8 @@ Pour la version 2013, nous avons utilisé le nouveau protocole de communication 
 
 import sys
 import os
-#DIR_PATH = os.path.dirname(os.path.abspath(__file__))
-#sys.path.append(os.path.join(DIR_PATH, "..", "lib"))
+DIR_PATH = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(DIR_PATH, "..", "map"))
 
 
 import optparse
@@ -109,7 +109,7 @@ if __name__ == "__main__":
 		bigrobot2.init(engine)
 		minirobot2.init(engine)"""
 
-		maploader.load_map("/home/furmi/dev/simuscreen/map/map.xml",engine)
+		maploader.load_map("map/map.xml",engine)
 
 		"""engine.add(bigrobot)
 		engine.add(minirobot)

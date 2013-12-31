@@ -23,14 +23,16 @@ def load_map(filename,engine):
 	for feu in dom.getElementsByTagName("feu"):
 		engine.add(Feu(engine,mm_to_px(int(feu.getAttribute("x")),int(feu.getAttribute("y"))),feu.getAttribute("orientation")))
 	for arbre in dom.getElementsByTagName("arbre"):
-		engine.add(Arbre(engine,mm_to_px(int(arbre.getAttribute("x")),int(arbre.getAttribute("y")))))
+		engine.add(Arbre(engine,mm_to_px(int(arbre.getAttribute("x")),int(arbre.getAttribute("y"))),arbre.getAttribute("orientation")))
 	for torche in dom.getElementsByTagName("torche"):
 		engine.add(Torche(engine,mm_to_px(int(torche.getAttribute("x")),int(torche.getAttribute("y")))))
 	for fresque in dom.getElementsByTagName("fresque"):
 		engine.add(Fresque(engine,mm_to_px(int(fresque.getAttribute("x")),int(fresque.getAttribute("y")))))
 	for mammouth in dom.getElementsByTagName("mammouth"):
 		engine.add(Mammouth(engine,mm_to_px(int(mammouth.getAttribute("x")),int(mammouth.getAttribute("y")))))
-	for foyer in dom.getElementsByTagName("foyer"):
-		engine.add(Foyer(engine,mm_to_px(int(foyer.getAttribute("x")),int(foyer.getAttribute("y"))),foyer.getAttribute("type")))
+	for foyerCentre in dom.getElementsByTagName("foyerCentre"):
+		engine.add(FoyerCentre(engine,mm_to_px(int(foyerCentre.getAttribute("x")),int(foyerCentre.getAttribute("y")))))
+	for foyerBord in dom.getElementsByTagName("foyerBord"):
+		engine.add(FoyerBord(engine,mm_to_px(int(foyerBord.getAttribute("x")),int(foyerBord.getAttribute("y"))),foyerBord.getAttribute("position")))
 	for bac in dom.getElementsByTagName("bac"):
 		engine.add(Bac(engine,mm_to_px(int(bac.getAttribute("x")),int(bac.getAttribute("y"))),bac.getAttribute("color")))

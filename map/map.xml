@@ -15,20 +15,20 @@
 	<feu x="400" y="1100" orientation=""/>
 	<feu x="900" y="1600" orientation="vert"/>
 	<feu x="15" y="800" orientation="vert"/>
-	<feu x="1300" y="2000" orientation=""/>
+	<feu x="1300" y="1985" orientation=""/>
 
 	<!-- Placement des feux du côté droite (jaune) -->
 	<feu x="2100" y="600" orientation="vert"/>
 	<feu x="2100" y="1600" orientation="vert"/>
 	<feu x="2600" y="1100" orientation=""/>
 	<feu x="2985" y="800" orientation="vert"/>
-	<feu x="1700" y="2000" orientation=""/>
+	<feu x="1700" y="1985" orientation=""/>
 
     <!-- Placement des arbres -->
-	<arbre x="0" y="1300" />
-    <arbre x="700" y="2000" />
-    <arbre x="2300" y="2000" />
-    <arbre x="3000" y="1300" />
+	<arbre x="60" y="1300" orientation="droite"/>
+    <arbre x="700" y="1940" orientation=""/>
+    <arbre x="2300" y="1940" orientation=""/>
+    <arbre x="2940" y="1300" orientation="gauche"/>
 
     <!-- Placement des torches -->
 	<torche x="900" y="1100" />
@@ -42,9 +42,9 @@
     <mammouth x="2250" y="12" />
 
     <!-- Placement des foyers -->
-	<foyer x="1500" y="1050" type="centre"/>
-	<foyer x="0" y="2000" type=""/>
-    <foyer x="3000" y="2000" type=""/>
+	<foyerCentre x="1500" y="1050" />
+	<foyerBord x="83" y="1917" position="gauche"/>
+    <foyerBord x="2917" y="1917" position="droite"/>
 
     <!-- Placement des bacs à fruits -->
 	<bac x="750" y="150" color="yellow"/>

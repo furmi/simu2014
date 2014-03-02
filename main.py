@@ -21,6 +21,7 @@ Pour la version 2013, nous avons utilisé le nouveau protocole de communication 
 """
 
 #test de modif
+#test modif fixe
 
 import sys
 import os

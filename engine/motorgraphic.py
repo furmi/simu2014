@@ -78,8 +78,6 @@ class MotorGraphic():
 		#print("après flipscreen")
 		### Events
 		for event in pg.event.get():
-			print("event :")
-			print(event)
 			if event.type == QUIT:
 				return False
 			else:

@@ -16,15 +16,10 @@ from .engineobject import *
 class MotorPhysic:
 	""" unité : mm """
 	def __init__(self):
-		print("IN : Cstr MotorPhysic")
 		self.space = pm.Space()
-		print("après space")
 		self.space.gravity = (0.0, 0.0)
-		print("après gravity")
 		self.objects = []
-		print("après objects")
 		self.coef_frot = 0.90
-		print("OUT : Cstr MotorPhysic")
 
 	def add_collision_handler(self, colltype1, colltype2, f):
 		self.space.add_collision_handler(colltype1, colltype2, None, None, f, None)

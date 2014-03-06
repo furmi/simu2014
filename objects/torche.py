@@ -18,7 +18,7 @@ class Torche(EngineObjectCircle):
 			colltype		= COLLTYPE_TORCHE,
 			posinit			= posinit,
 			color			= "brown",
-			mass 			= MASS_INF,
+			mass 			= 500,
 			radius			= mm_to_px(80)
 		)
 		self.feu = 3

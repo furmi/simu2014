@@ -1,32 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from pymunk import RotaryLimitJoint, PinJoint
-import pymunk
-from math import *
+from .robot import Robot
+import sys
+import os
+DIR_PATH = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(DIR_PATH, "..", "define"))
+sys.path.append(os.path.join(DIR_PATH, "..", "engine"))
 
-from geometry import Vec
-
-
-from ..define import *
-from .robot import Robot, MINI, Others
-from ..engine.engineobject import EngineObjectPoly,EngineObjectSegment
-from .verre import Verre
+from define import *
 
 
 class MiniRobot(Robot):
-	def __init__(self, *, engine, asserv, others, posinit, team, match):
+	def __init__(self, *, engine, posinit, team):
 		Robot.__init__(self,
 			engine 				= engine,
-			asserv				= asserv,
-			asserv_obj 			= None,
-			others				= others,
-            visio 				= None,
-            visio_obj 			= None,
 			team				= team,
 			posinit				= posinit,
 			mass				= 10,
 			typerobot			= MINI,
 			colltype 			= COLLTYPE_PETIT_ROBOT,
 			poly_points			= mm_to_px((0,0),(HEIGHT_MINI,0),(HEIGHT_MINI,WIDTH_MINI),(0,WIDTH_MINI)),
-            match 				= match
 		)

@@ -19,7 +19,7 @@ class Bac(EngineObjectPoly):
 			posinit			= posinit,
 			mass			= MASS_INF,
 			color			= color,
-			poly_points		= map(lambda p: mm_to_px(*p),[(0,0),(700,0),(700,300),(0,300)])
+			poly_points		= map(lambda p: mm_to_px(*p),[(0,0),(700,0),(700,300-25),(0,300-25)])
 		)
 		self.nbFruit = 0
 

@@ -100,7 +100,6 @@ class EngineObject:
 					return True
 			return False
 
-
 class EngineObjectCircle(EngineObject):
 	def __init__(self, *, radius, **kwargs
 			):
@@ -130,7 +129,6 @@ class EngineObjectPoly(EngineObject):
 	def create_shape(self, body):
 		shape = self.engine.physicsengine.create_shape_poly(body, self.poly_points, self.offset)
 		return shape
-		
 
 class EngineObjectSegment(EngineObject):
 	def __init__(self, *, posA, posB, width, **kwargs):

@@ -21,7 +21,7 @@ class Feu(EngineObjectPoly):
 			engine			= engine,
 			colltype		= COLLTYPE_FEU,
 			posinit			= posinit,
-			mass			= MASS_INF,
+			mass			= 130,
 			poly_points		= points
 		)
 

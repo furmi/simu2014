@@ -24,7 +24,7 @@ COLLTYPE_FOYER   		= 10
 COLLTYPE_BAC			= 11
 
 
-BLUE				= 0
+YELLOW				= 0
 RED					= 1
 
 T_VERRE				= 0
@@ -53,10 +53,6 @@ KEY_BULDO			= K_x			# mode buldozer
 KEY_TELEPORTATION	= K_t			# mode téléportation
 KEY_RECUL			= K_r			# mode marche arrière
 KEY_JACK			= K_j			# jack
-KEY_SHARP1			= K_k			# sharp1
-KEY_SHARP2			= K_l			# sharp2
-KEY_SHARP3			= K_i			# sharp3
-KEY_SHARP4			= K_o			# sharp4
 
 BIG			= 0
 MINI		= 1
@@ -65,11 +61,11 @@ LEFT		= 0
 RIGHT		= 1
 
 # dimensions du petit robot
-WIDTH_MINI 		= 180
-HEIGHT_MINI 	= 102
+WIDTH_MINI 		= 200
+HEIGHT_MINI 	= 138
 # dimensions du gros robot
-WIDTH_GROS 		= 308
-HEIGHT_GROS 	= 192
+WIDTH_GROS 		= 330
+HEIGHT_GROS 	= 265
 # dimension des palettes (buldo) du mini robot
 SIZE_PALETTE	= 120
 WIDTH_PALETTE	= 10

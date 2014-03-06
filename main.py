@@ -36,6 +36,8 @@ import time
 from engine import *
 import match
 from map import maploader
+from objects import bigrobot, minirobot
+
 
 
 if __name__ == "__main__":
@@ -70,53 +72,35 @@ if __name__ == "__main__":
 		engine = Engine()
 		match = match.Match()
 
-		# debug
-		#debug = Debug()
-
 		# robots
-		"""bigrobot = BigRobot(engine = engine,
-							posinit = mm_to_px(150, 1800),
-							team = BLUE,
-							asserv = utcoupe.ASSERV_BIG,
-							others = utcoupe.OTHERS_BIG,
-							match = match)
-		minirobot = MiniRobot(engine = engine,
-							  posinit = mm_to_px(225, 300),
-							  team = BLUE,
-							  asserv = utcoupe.ASSERV_MINI,
-							  others = utcoupe.OTHERS_MINI,
-							  match = match)
-		bigrobot2 = BigRobot(engine = engine,
-							 posinit = mm_to_px(3000-250,250),
-							 team = RED,
-							 asserv = utcoupe.ASSERV_BIG_ENEMY,
-							 others = utcoupe.OTHERS_BIG_ENEMY,
-							 match = match)
-		minirobot2 = MiniRobot(engine = engine,
-							   posinit = mm_to_px(3000-400,250),
-							   team = RED,
-							   asserv = utcoupe.ASSERV_MINI_ENEMY,
-							   others = utcoupe.OTHERS_MINI_ENEMY,
-							   match = match)
-		robots = (bigrobot, minirobot, bigrobot2, minirobot2)"""
+		bigbot = bigrobot.BigRobot(engine = engine,
+							posinit = mm_to_px(180, 170),
+							team = RED)
+		minibot = minirobot.MiniRobot(engine = engine,
+							  posinit = mm_to_px(70, 570),
+							  team = RED)
+		bigbot2 = bigrobot.BigRobot(engine = engine,
+							 posinit = mm_to_px(3000-180,170),
+							 team = YELLOW)
+		minibot2 = minirobot.MiniRobot(engine = engine,
+							   posinit = mm_to_px(3000-100,690),
+							   team = YELLOW)
+		robots = (bigbot, minibot, bigbot2, minibot2)
 
 		# hokuyo
 		#hokuyo = services.create(utcoupe.HOKUYO, Hokuyo(robots))
 
-		engine.init(match)
-		match.init(engine)
-
-		"""bigrobot.init(engine)
-		minirobot.init(engine)
+		#bigrobot.init(engine)
+		"""minirobot.init(engine)
 		bigrobot2.init(engine)
 		minirobot2.init(engine)"""
 
 		maploader.load_map("map/map.xml",engine)
 
-		"""engine.add(bigrobot)
-		engine.add(minirobot)
-		engine.add(bigrobot2)
-		engine.add(minirobot2)"""
+		engine.add(bigbot)
+		engine.add(minibot)
+		engine.add(bigbot2)
+		engine.add(minibot2)
 
 		t=threading.Thread(target=engine.start)
 		t.setDaemon(True)
@@ -125,8 +109,6 @@ if __name__ == "__main__":
 		while not engine.e_stop.is_set():
 				try:
 						engine.e_stop.wait(3)
-						#print(match.score(BLUE))
-						#print(match.score(RED))
 						print("dans la boucle")
 				except KeyboardInterrupt:
 						engine.stop()

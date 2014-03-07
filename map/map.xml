@@ -1,6 +1,6 @@
 <map>
 	
-	<backgroundmap src="map.jpg" />
+	<backgroundmap src="map.png" />
 	
 	<!-- Placement des bords de la table -->
 	<wall x1="0" y1="0" x2="3000" y2="0" />

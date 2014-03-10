@@ -52,7 +52,7 @@ class Asserv:
 			return 5
 
 	def ping(self):
-		return 'pong'
+		return 'asserv pong'
 
 	def goto(self, x, y):
 		"""
@@ -60,7 +60,6 @@ class Asserv:
 		@param x mm
 		@param y mm
 		"""
-		self.cleang()
 		self.__robot.addGoal(GoalPOS(*mm_to_px(x,y)))
 
 	def gotor(self, x, y):
@@ -69,7 +68,6 @@ class Asserv:
 		@param x mm
 		@param y mm
 		"""
-		self.cleang()
 		self.__robot.addGoal( GoalPOSR(*mm_to_px(x,y)))
 
 	def gotoa(self, x, y, a):
@@ -79,7 +77,6 @@ class Asserv:
 		@param y mm
 		@param a rad
 		"""
-		self.cleang()
 		self.__robot.addGoal(GoalPOS(*mm_to_px(x,y)))
 		self.__robot.addGoal(GoalANGLE(math.radians(a)))
 
@@ -90,7 +87,6 @@ class Asserv:
 		@param y mm
 		@param a rad
 		"""
-		self.cleang()
 		self.__robot.addGoal(GoalPOSR(*mm_to_px(x,y)))
 		self.__robot.addGoal(GoalANGLER(math.radians(a)))
 
@@ -99,7 +95,6 @@ class Asserv:
 		Donner l'ordre de tourner d'un angle
 		@param a rad
 		"""
-		self.cleang()
 		self.__robot.addGoal(GoalANGLE(math.radians(a)))
 
 	def rotr(self, a):
@@ -154,7 +149,7 @@ class Visio:
 		self.__robot = robot
 
 	def ping(self):
-		return "pong"
+		return "visio pong"
 
 	def adresse(self):
 		#TODO return en fonction de l'enum
@@ -166,7 +161,7 @@ class Others:
 		self.__robot = robot
 
 	def ping(self):
-		return "pong"
+		return "others pong"
 
 	def adresse(self):
 		#TODO return en fonction de l'enum

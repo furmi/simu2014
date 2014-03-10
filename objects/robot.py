@@ -183,6 +183,8 @@ class Robot(EngineObjectPoly):
 					print ('pass dans le mod teleport')
 				else:
 					v = mm_to_px(1000) * (-1 if self.__mod_recul else 1)
+					#on clean les goals avant d'en envoyer un nouveau afin d'éviter les blocages
+					self.cleanGoals()
 					self.__asserv.goto(*px_to_mm(p[0],p[1]))
 				return True
 		return False

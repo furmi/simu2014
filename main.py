@@ -37,6 +37,7 @@ from engine import *
 import match
 from map import maploader
 from objects import bigrobot, minirobot
+import communication
 
 
 
@@ -87,7 +88,10 @@ if __name__ == "__main__":
 							   team = YELLOW)
 		robots = (bigbot, minibot, bigbot2, minibot2)
 
-		# hokuyo
+		#instance de l'objet communication
+		com = communication.Communication(bigbot, minibot)
+
+		# hkuyo
 		#hokuyo = services.create(utcoupe.HOKUYO, Hokuyo(robots))
 
 		#bigrobot.init(engine)

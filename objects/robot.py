@@ -75,6 +75,27 @@ class Robot(EngineObjectPoly):
 	def setStop(self, value):
 		self.__stop = value
 
+	def addGoalOrder(self, numOrdre, x = None, y = None, angle = None):
+		"""
+		Méthode appelée depuis communication pour ajouter un goal au robot
+		@param numOrdre int définit dans define
+		"""
+		if (numOrdre == GOTO):
+			self.__asserv.goto(x,y)
+		elif (numOrdre == GOTOA):
+			self.__asserv.gotoa(x,y,angle)
+		elif (numOrdre == GOTOAR):
+			self.__asserv.gotoar(x,y,angle)
+		elif (numOrdre == GOTOR):
+			self.__asserv.gotor(x,y)
+		elif (numOrdre == ROT):
+			self.__asserv.rot(angle)
+		elif (numOrdre == ROTR):
+			self.__asserv.rotr(angle)
+		elif (numOrdre == PWM):
+			self.__asserv.pwm(x,y,angle)	#!! x=pwm_l, y=pwm_r, angle=delay !!
+
+
 	def _my_velocity_func(self):
 		def f(body, gravity, damping, dt):
 			self.body._set_torque(0)

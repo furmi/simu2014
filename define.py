@@ -76,6 +76,64 @@ ECART_ROBOT_BALAIS	= 0
 
 #ECART_CENTRE = -65 # ecart par rapport au centre du robot
 
+################################################
+# CONSTANTES EXTERNES POUR COMMUNICATION
+################################################
+
+ADDR_FLUSSMITTEL_OTHER	= 1
+ADDR_FLUSSMITTEL_ASSERV	= 2
+ADDR_FLUSSMITTEL_CAM	= 3
+ADDR_TIBOT_OTHER		= 4
+ADDR_TIBOT_ASSERV		= 5
+ADDR_HOKUYO				= 6
+
+PINGPING		= 1
+A_GOTOA			= 2
+A_GOTO			= 3
+A_GOTOAR		= 4
+A_GOTOR			= 5
+A_ROT			= 6
+A_ROTR			= 7
+A_KILLG 		= 8
+A_CLEANG		= 9
+A_PIDA			= 10
+A_PIDD			= 11
+A_GET_CODER		= 12
+A_PWM			= 13
+A_ACCMAX		= 14
+A_RESET_POS		= 15
+A_GET_POS		= 16
+A_GET_POS_ID	= 17
+
+O_BRAS_OUVRIR	= 30
+O_BRAS_FERMER	= 31
+O_RET_OUVRIR	= 32
+O_RET_FERMER	= 33
+O_MONTER_ASC	= 34
+O_BAISSER_ASC	= 35
+
+GET_CAM			= 50
+GET_HOKUYO		= 51
+GET_LAST_ID 	= 52
+
+################################################
+# CONSTANTES INTERNES AU SIMULATEUR
+################################################
+
+GOTO	= 1
+GOTOR	= 2
+GOTOA	= 3
+GOTOAR	= 4
+ROT		= 5
+ROTR	= 6
+CLEANG	= 7
+PWM		= 8
+
+
+################################################
+# METHODES GENERIQUES DU SIMULATEUR
+################################################
+
 def mm_to_px(*args):
 	"""
 	@param args une liste ou un atom de valeurs ou de positions

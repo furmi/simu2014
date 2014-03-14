@@ -42,7 +42,7 @@ class Robot(EngineObjectPoly):
 		self.__stop = False
 
 		#utilité ?
-		self.__current_team = YELLOW
+		self.__current_team = RED
 		self.__current_robot = BIG
 
 		self.body._set_velocity_func(self._my_velocity_func())
@@ -135,7 +135,7 @@ class Robot(EngineObjectPoly):
 		# selection des teams et des robots
 		if KEYDOWN == event.type:
 			if KEY_CHANGE_TEAM == event.key:
-				self.__current_team = RED
+				self.__current_team = YELLOW
 				print("équipe rouge")
 				return True
 			elif KEY_CHANGE_ROBOT == event.key:

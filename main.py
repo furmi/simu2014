@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
 		# robots
 		bigbot = bigrobot.BigRobot(engine = engine,
-							posinit = mm_to_px(180, 170),
+							posinit = mm_to_px(180, 400),
 							team = RED)
 		minibot = minirobot.MiniRobot(engine = engine,
 							  posinit = mm_to_px(70, 570),
@@ -98,7 +98,7 @@ if __name__ == "__main__":
 		maploader.load_map("map/map.xml",engine)
 
 		engine.add(bigbot)
-		engine.add(minibot)
+		#engine.add(minibot)
 		engine.add(bigbot2)
 		engine.add(minibot2)
 

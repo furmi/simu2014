@@ -64,13 +64,14 @@ class Communication():
 		#on traite les ordres qui nécessitent de renvoyer des informations
 		if (order == A_GET_POS):
 			pos = self.__bigrobot.getPosition()
-			self.__orders_to_return.append(ADDR_FLUSSMITTEL_ASSERV, order, pos)
+			self.__orders_to_return.append((ADDR_FLUSSMITTEL_ASSERV, order, pos))
 		elif (order == A_GET_POS_ID):
 			pos = self.__bigrobot.getPosition()
-			self.__orders_to_return.append(ADDR_FLUSSMITTEL_ASSERV, order, pos, args[0])
+			pos_id = pos[0], pos[1], pos[2], args[0]
+			self.__orders_to_return.append((ADDR_FLUSSMITTEL_ASSERV, order, pos_id))
 		else:
 			#on ajoute l'ordre reçu à la structure de renvoie
-			self.__orders_to_return.append(ADDR_FLUSSMITTEL_OTHER, order, args)
+			self.__orders_to_return.append((ADDR_FLUSSMITTEL_OTHER, order, args))
 			if (order == PINGPING):
 				self.__bigrobot.ping()
 			elif (order == A_GOTOA):

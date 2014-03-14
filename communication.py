@@ -8,11 +8,14 @@ sys.path.append(os.path.join(DIR_PATH, "..", "map"))
 #pour importer les constantes des ordres et des robots
 from define import *
 
+from collections import deque
+
 
 class Communication():
 	def __init__(self, bigrobot, minirobot):
 		self.__bigrobot = bigrobot	#objet robot, afin d'envoyer les ordres
 		self.__minirobot = minirobot	#objet robot, afin d'envoyer les ordres
+		self.__orders_to_return = deque()	#structure de donnée contenant les ordres à renvoyer via readOrdersApi
 
 	def sendOrderAPI(self, address, order, *arguments):
 		"""
@@ -40,7 +43,13 @@ class Communication():
 		"""
 		Méthode appelée par l'IA pour vérifier les ordres en attente
 		"""
-		pass
+		#if address == 'all':
+		order = self.__orders_to_return.popleft()
+		if order is not None:
+			print(order)
+			return (order[0], order[1], order[2])
+		else:
+			return -1
 
 	def __traitementFlussmittelOthers(self, order, args):
 		"""
@@ -52,25 +61,36 @@ class Communication():
 		"""
 		Parse l'ordre envoyé à ADDR_FLUSSMITTEL_ASSERV
 		"""
-		print(args)
-		if (order == PINGPING):
-			self.__bigrobot.ping()
-		elif (order == A_GOTOA):
-			self.__bigrobot.addGoalOrder(GOTOA, args(1), args(2), args(3))
-		elif (order == A_GOTO):
-			self.__bigrobot.addGoalOrder(GOTO, args[1], args[2])
-		elif (order == A_GOTOAR):
-			self.__bigrobot.addGoalOrder(GOTOAR, args(1), args(2), args(3))
-		elif (order == A_GOTOR):
-			self.__bigrobot.addGoalOrder(GOTOR, args(1), args(2))
-		elif (order == A_ROT):
-			self.__bigrobot.addGoalOrder(ROT, args(1))
-		elif (order == A_ROTR):
-			self.__bigrobot.addGoalOrder(ROTR, args(1))
-		elif (order == A_CLEANG):
-			self.__bigrobot.cleanGoals()
-		elif (order == A_PWM):
-			self.__bigrobot.addGoalOrder(PWM, args(1), args(2), args(3))
+		#on traite les ordres qui nécessitent de renvoyer des informations
+		if (order == A_GET_POS):
+			pos = self.__bigrobot.getPosition()
+			self.__orders_to_return.append(ADDR_FLUSSMITTEL_ASSERV, order, pos)
+		elif (order == A_GET_POS_ID):
+			pos = self.__bigrobot.getPosition()
+			self.__orders_to_return.append(ADDR_FLUSSMITTEL_ASSERV, order, pos, args[0])
+		else:
+			#on ajoute l'ordre reçu à la structure de renvoie
+			self.__orders_to_return.append(ADDR_FLUSSMITTEL_OTHER, order, args)
+			if (order == PINGPING):
+				self.__bigrobot.ping()
+			elif (order == A_GOTOA):
+				self.__bigrobot.addGoalOrder(GOTOA, args[1], args[2], args[3])
+			elif (order == A_GOTO):
+				self.__bigrobot.addGoalOrder(GOTO, args[1], args[2])
+			elif (order == A_GOTOAR):
+				self.__bigrobot.addGoalOrder(GOTOAR, args[1], args[2], args[3])
+			elif (order == A_GOTOR):
+				self.__bigrobot.addGoalOrder(GOTOR, args[1], args[2])
+			elif (order == A_ROT):
+				self.__bigrobot.addGoalOrder(ROT, args[1])
+			elif (order == A_ROTR):
+				self.__bigrobot.addGoalOrder(ROTR, args[1])
+			elif (order == A_CLEANG):
+				self.__bigrobot.cleanGoals()
+			elif (order == A_PWM):
+				self.__bigrobot.addGoalOrder(PWM, args[1], args[2], args[3])
+			else:
+				print('Error : mauvais paramètre traitement Flussmittel asserv !')
 
 	def __traitementFlussmittelCam(self, order, args):
 		"""
@@ -91,21 +111,21 @@ class Communication():
 		if (order == PINGPING):
 			self.__minirobot.ping()
 		elif (order == A_GOTOA):
-			self.__minirobot.addGoalOrder(GOTOA, args(1), args(2), args(3))
+			self.__minirobot.addGoalOrder(GOTOA, args[1], args[2], args[3])
 		elif (order == A_GOTO):
 			self.__minirobot.addGoalOrder(GOTO, args[1], args[2])
 		elif (order == A_GOTOAR):
-			self.__minirobot.addGoalOrder(GOTOAR, args(1), args(2), args(3))
+			self.__minirobot.addGoalOrder(GOTOAR, args[1], args[2], args[3])
 		elif (order == A_GOTOR):
-			self.__minirobot.addGoalOrder(GOTOR, args(1), args(2))
+			self.__minirobot.addGoalOrder(GOTOR, args[1], args[2])
 		elif (order == A_ROT):
-			self.__minirobot.addGoalOrder(ROT, args(1))
+			self.__minirobot.addGoalOrder(ROT, args[1])
 		elif (order == A_ROTR):
-			self.__minirobot.addGoalOrder(ROTR, args(1))
+			self.__minirobot.addGoalOrder(ROTR, args[1])
 		elif (order == A_CLEANG):
 			self.__minirobot.cleanGoals()
 		elif (order == A_PWM):
-			self.__minirobot.addGoalOrder(PWM, args(1), args(2), args(3))
+			self.__minirobot.addGoalOrder(PWM, args[1], args[2], args[3])
 
 	def __traitementHokuyo(self, order, args):
 		"""
@@ -115,4 +135,11 @@ class Communication():
 
 	def testCom(self):
 		print('testCom')
-		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GOTO,50,1500,1000)
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GOTO,50,1200,500)
+		print('order 1', self.readOrdersAPI())
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GOTO,51,1200,1500)
+		print('order 2', self.readOrdersAPI())
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GET_POS,35)
+		print('order 3', self.readOrdersAPI())
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GET_POS_ID,36)
+		print('order 4', self.readOrdersAPI())

@@ -59,6 +59,9 @@ class Robot(EngineObjectPoly):
 	def a(self):
 		return int(math.degrees(self.body.angle))
 
+	def getPosition(self):
+		return self.x(), self.y(), self.a()
+
 	def getTyperobot(self):
 		return self.__typerobot
 

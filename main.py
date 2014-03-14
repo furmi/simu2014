@@ -110,6 +110,9 @@ if __name__ == "__main__":
 		t.setDaemon(True)
 		t.start()
 
+		#lancement du test de communication
+		com.testCom()
+
 		while not engine.e_stop.is_set():
 				try:
 						engine.e_stop.wait(3)

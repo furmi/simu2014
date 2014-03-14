@@ -52,12 +52,13 @@ class Communication():
 		"""
 		Parse l'ordre envoyé à ADDR_FLUSSMITTEL_ASSERV
 		"""
+		print(args)
 		if (order == PINGPING):
 			self.__bigrobot.ping()
 		elif (order == A_GOTOA):
 			self.__bigrobot.addGoalOrder(GOTOA, args(1), args(2), args(3))
 		elif (order == A_GOTO):
-			self.__bigrobot.addGoalOrder(GOTO, args(1), args(2))
+			self.__bigrobot.addGoalOrder(GOTO, args[1], args[2])
 		elif (order == A_GOTOAR):
 			self.__bigrobot.addGoalOrder(GOTOAR, args(1), args(2), args(3))
 		elif (order == A_GOTOR):
@@ -92,7 +93,7 @@ class Communication():
 		elif (order == A_GOTOA):
 			self.__minirobot.addGoalOrder(GOTOA, args(1), args(2), args(3))
 		elif (order == A_GOTO):
-			self.__minirobot.addGoalOrder(GOTO, args(1), args(2))
+			self.__minirobot.addGoalOrder(GOTO, args[1], args[2])
 		elif (order == A_GOTOAR):
 			self.__minirobot.addGoalOrder(GOTOAR, args(1), args(2), args(3))
 		elif (order == A_GOTOR):
@@ -114,4 +115,4 @@ class Communication():
 
 	def testCom(self):
 		print('testCom')
-		self.sendOrderAPI(ADDR_TIBOT_ASSERV,A_GOTO, (50,1500,1000))
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GOTO,50,1500,1000)

@@ -9,13 +9,15 @@ sys.path.append(os.path.join(DIR_PATH, "..", "map"))
 from define import *
 
 from collections import deque
+import time
 
 
 class Communication():
-	def __init__(self, bigrobot, minirobot):
+	def __init__(self, bigrobot, minirobot, hokuyo):
 		self.__bigrobot = bigrobot	#objet robot, afin d'envoyer les ordres
 		self.__minirobot = minirobot	#objet robot, afin d'envoyer les ordres
 		self.__orders_to_return = deque()	#structure de donnée contenant les ordres à renvoyer via readOrdersApi
+		self.__hokuyo = hokuyo
 
 	def sendOrderAPI(self, address, order, *arguments):
 		"""
@@ -44,7 +46,10 @@ class Communication():
 		Méthode appelée par l'IA pour vérifier les ordres en attente
 		"""
 		#if address == 'all':
-		order = self.__orders_to_return.popleft()
+		if (len(self.__orders_to_return) != 0):
+			order = self.__orders_to_return.popleft()
+		else:
+			order = None
 		if order is not None:
 			print(order)
 			return (order[0], order[1], order[2])
@@ -97,7 +102,10 @@ class Communication():
 		"""
 		Parse l'ordre envoyé à ADDR_FLUSSMITTEL_CAM
 		"""
-		pass
+		positions_bots = self.__hokuyo.getHokuyo()
+		#if (order == GET_HOKUYO):
+
+
 
 	def __traitementTibotOthers(self, order, args):
 		"""
@@ -109,24 +117,35 @@ class Communication():
 		"""
 		Parse l'ordre envoyé à ADDR_TIBOT_ASSERV
 		"""
-		if (order == PINGPING):
-			self.__minirobot.ping()
-		elif (order == A_GOTOA):
-			self.__minirobot.addGoalOrder(GOTOA, args[1], args[2], args[3])
-		elif (order == A_GOTO):
-			self.__minirobot.addGoalOrder(GOTO, args[1], args[2])
-		elif (order == A_GOTOAR):
-			self.__minirobot.addGoalOrder(GOTOAR, args[1], args[2], args[3])
-		elif (order == A_GOTOR):
-			self.__minirobot.addGoalOrder(GOTOR, args[1], args[2])
-		elif (order == A_ROT):
-			self.__minirobot.addGoalOrder(ROT, args[1])
-		elif (order == A_ROTR):
-			self.__minirobot.addGoalOrder(ROTR, args[1])
-		elif (order == A_CLEANG):
-			self.__minirobot.cleanGoals()
-		elif (order == A_PWM):
-			self.__minirobot.addGoalOrder(PWM, args[1], args[2], args[3])
+		#on traite les ordres qui nécessitent de renvoyer des informations
+		if (order == A_GET_POS):
+			pos = self.__minirobot.getPosition()
+			self.__orders_to_return.append((ADDR_TIBOT_ASSERV, order, pos))
+		elif (order == A_GET_POS_ID):
+			pos = self.__minirobot.getPosition()
+			pos_id = pos[0], pos[1], pos[2], args[0]
+			self.__orders_to_return.append((ADDR_TIBOT_ASSERV, order, pos_id))
+		else:
+			if (order == PINGPING):
+				self.__minirobot.ping()
+			elif (order == A_GOTOA):
+				self.__minirobot.addGoalOrder(GOTOA, args[1], args[2], args[3])
+			elif (order == A_GOTO):
+				self.__minirobot.addGoalOrder(GOTO, args[1], args[2])
+			elif (order == A_GOTOAR):
+				self.__minirobot.addGoalOrder(GOTOAR, args[1], args[2], args[3])
+			elif (order == A_GOTOR):
+				self.__minirobot.addGoalOrder(GOTOR, args[1], args[2])
+			elif (order == A_ROT):
+				self.__minirobot.addGoalOrder(ROT, args[1])
+			elif (order == A_ROTR):
+				self.__minirobot.addGoalOrder(ROTR, args[1])
+			elif (order == A_CLEANG):
+				self.__minirobot.cleanGoals()
+			elif (order == A_PWM):
+				self.__minirobot.addGoalOrder(PWM, args[1], args[2], args[3])
+			else:
+				print('Error : mauvais paramètre traitement Flussmittel asserv !')
 
 	def __traitementHokuyo(self, order, args):
 		"""
@@ -136,11 +155,16 @@ class Communication():
 
 	def testCom(self):
 		print('testCom')
-		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GOTO,50,1200,500)
+		self.sendOrderAPI(ADDR_TIBOT_ASSERV,A_GOTO,49,2000,400)
+		print('order 0', self.readOrdersAPI())
+		time.sleep(1)
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GOTO,50,180,500)
 		print('order 1', self.readOrdersAPI())
 		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GOTO,51,1200,1500)
 		print('order 2', self.readOrdersAPI())
-		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GET_POS,35)
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GOTO,52,2000,1500)
 		print('order 3', self.readOrdersAPI())
-		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GET_POS_ID,36)
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GET_POS,35)
 		print('order 4', self.readOrdersAPI())
+		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GET_POS_ID,36)
+		print('order 5', self.readOrdersAPI())

@@ -15,7 +15,7 @@ class Hokuyo:
 	Permet de répondre aux ordres envoyés à travers le protocole.
 	"""
 	def __init__(self, robots):
-		self.robots = robots
+		self.__robots = robots
 		self.__last_time_stamp = 0
 		#return le nombre de millisecondes depuis le temps d'origine
 		self.__get_milli = lambda: int(round(time.time() * 1000))
@@ -46,11 +46,22 @@ class Hokuyo:
 		@return int position x du petit robot ennemi
 		@return int position y du petit robot ennemi
 		"""
-		return self.__getTimeStamp(), \
-			   self.robots[0].x(), self.robots[0].y(), \
-			   self.robots[1].x(), self.robots[1].y(), \
-			   self.robots[2].x(), self.robots[2].y(), \
-			   self.robots[3].x(), self.robots[3].y()
+		taille =len(self.__robots)
+
+		ret = list()
+		ret.append(self.__getTimeStamp())
+
+		for i in range(taille):
+			ret.append(self.__robots[i].x())
+			ret.append(self.__robots[i].y())
+
+		return ret
+
+		"""return self.__getTimeStamp(), \
+			   self.__robots[0].x(), self.__robots[0].y(), \
+			   self.__robots[1].x(), self.__robots[1].y(), \
+			   self.__robots[2].x(), self.__robots[2].y(), \
+			   self.__robots[3].x(), self.__robots[3].y()"""
 
 	def __getTimeStamp(self):
 		current_time = self.__get_milli()

@@ -38,6 +38,7 @@ import match
 from map import maploader
 from objects import bigrobot, minirobot
 import communication
+import hokuyo
 
 
 
@@ -75,7 +76,7 @@ if __name__ == "__main__":
 
 		# robots
 		bigbot = bigrobot.BigRobot(engine = engine,
-							posinit = mm_to_px(180, 400),
+							posinit = mm_to_px(180, 200),
 							team = RED)
 		minibot = minirobot.MiniRobot(engine = engine,
 							  posinit = mm_to_px(70, 570),
@@ -88,11 +89,11 @@ if __name__ == "__main__":
 							   team = YELLOW)
 		robots = (bigbot, minibot, bigbot2, minibot2)
 
-		#instance de l'objet communication
-		com = communication.Communication(bigbot, minibot)
+		#instance de l'hokuyo
+		hokuyo = hokuyo.Hokuyo(robots)
 
-		# hkuyo
-		#hokuyo = services.create(utcoupe.HOKUYO, Hokuyo(robots))
+		#instance de l'objet communication
+		com = communication.Communication(bigbot, minibot, hokuyo)
 
 		#bigrobot.init(engine)
 		"""minirobot.init(engine)
@@ -102,7 +103,7 @@ if __name__ == "__main__":
 		maploader.load_map("map/map.xml",engine)
 
 		engine.add(bigbot)
-		#engine.add(minibot)
+		engine.add(minibot)
 		engine.add(bigbot2)
 		engine.add(minibot2)
 

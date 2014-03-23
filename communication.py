@@ -151,7 +151,11 @@ class Communication():
 		"""
 		Parse l'ordre envoyé à ADDR_HOKUYO
 		"""
-		pass
+		if(order == GET_HOKUYO):
+			data = tuple(self.__hokuyo.getHokuyo())
+			data_to_ret = (args[0],)
+			data_to_ret += data
+			self.__orders_to_return.append((ADDR_HOKUYO, order, data_to_ret))
 
 	def testCom(self):
 		print('testCom')
@@ -168,3 +172,6 @@ class Communication():
 		print('order 4', self.readOrdersAPI())
 		self.sendOrderAPI(ADDR_FLUSSMITTEL_ASSERV,A_GET_POS_ID,36)
 		print('order 5', self.readOrdersAPI())
+		#time.sleep(5)
+		self.sendOrderAPI(ADDR_HOKUYO,GET_HOKUYO,123)
+		print('order 6', self.readOrdersAPI())

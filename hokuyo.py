@@ -49,11 +49,12 @@ class Hokuyo:
 		taille =len(self.__robots)
 
 		ret = list()
-		ret.append(self.__getTimeStamp())
 
 		for i in range(taille):
 			ret.append(self.__robots[i].x())
 			ret.append(self.__robots[i].y())
+
+		ret.append(self.__getTimeStamp())
 
 		return ret
 

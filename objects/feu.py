@@ -13,22 +13,44 @@ from engine.engineobject import EngineObjectPoly
 
 class Feu(EngineObjectPoly):
 	def __init__(self,engine,posinit, orientation):
-		if (orientation == "vert"):
-			points = map(lambda p: mm_to_px(*p),[(0,0),(30,0),(30,140),(0,140)])
-		else:
-			points = map(lambda p: mm_to_px(*p),[(0,0),(140,0),(140,30),(0,30)])
+		if (orientation == "vert"): # |
+			points_feu = map(lambda p: mm_to_px(*p),[(0,0),(30,0),(30,140),(0,140)])
+			points_triangle = map(lambda p: mm_to_px(*p),[(0,0),(70,55),(0,140)])
+			offset_triangle = mm_to_px(15,-70)
+		else: # ---
+			points_feu = map(lambda p: mm_to_px(*p),[(0,0),(140,0),(140,30),(0,30)])
+			points_triangle = map(lambda p: mm_to_px(*p),[(0,0),(55,70),(140,0)])
+			offset_triangle = mm_to_px(-70,15)
 		EngineObjectPoly.__init__(self,
 			engine			= engine,
 			colltype		= COLLTYPE_FEU,
 			posinit			= posinit,
-			mass			= 130,
-			poly_points		= points
+			mass			= 80,
+			poly_points		= points_feu
 		)
 
+		self.triangle = EngineObjectPoly(
+			engine 		= engine,
+			colltype	= COLLTYPE_FEU,
+			offset		= offset_triangle,
+			color		= "purple",
+			poly_points = points_triangle,
+			is_extension= True
+		)
+		self.__is_down = False
+		self.coucher_feu()
+
 	def eteindre(self):
-		#à modifier, ça ne modifie pas l'objet graphique...
-		self.poly_points = map(lambda p: mm_to_px(*p),[(0,0),(140,0),(140,85)])
-		self.color = "red"
+		if (self.__is_down == False):
+			self.coucher_feu()
+
+	def coucher_feu(self):
+		self.add_body_extension(self.triangle)
+		self.__is_down = True
+
+	def lever_feu(self):
+		self.remove_body_extension(self.triangle)
+		self.__is_down = False
 
 	def __repr__(self):
 		return "Feu %s " % (self.posinit,)

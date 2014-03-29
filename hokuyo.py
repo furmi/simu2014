@@ -58,12 +58,6 @@ class Hokuyo:
 
 		return ret
 
-		"""return self.__getTimeStamp(), \
-			   self.__robots[0].x(), self.__robots[0].y(), \
-			   self.__robots[1].x(), self.__robots[1].y(), \
-			   self.__robots[2].x(), self.__robots[2].y(), \
-			   self.__robots[3].x(), self.__robots[3].y()"""
-
 	def __getTimeStamp(self):
 		current_time = self.__get_milli()
 		diff_time = current_time - self.__last_time_stamp

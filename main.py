@@ -37,8 +37,7 @@ from engine import *
 import match
 from map import maploader
 from objects import bigrobot, minirobot
-import communication
-import hokuyo
+from processIA import ProcessIA
 
 
 
@@ -75,49 +74,40 @@ if __name__ == "__main__":
 		match = match.Match()
 
 		# robots
-		bigbot = bigrobot.BigRobot(engine = engine,
+		bigbotRed = bigrobot.BigRobot(engine = engine,
 							posinit = mm_to_px(180, 200),
 							team = RED)
-		minibot = minirobot.MiniRobot(engine = engine,
+		minibotRed = minirobot.MiniRobot(engine = engine,
 							  posinit = mm_to_px(70, 570),
 							  team = RED)
-		bigbot2 = bigrobot.BigRobot(engine = engine,
+		bigbotYellow = bigrobot.BigRobot(engine = engine,
 							 posinit = mm_to_px(3000-180,170),
 							 team = YELLOW)
-		minibot2 = minirobot.MiniRobot(engine = engine,
+		minibotYellow = minirobot.MiniRobot(engine = engine,
 							   posinit = mm_to_px(3000-100,690),
 							   team = YELLOW)
-		robots = (bigbot, minibot, bigbot2, minibot2)
+		robots_red = (bigbotRed, minibotRed, bigbotYellow, minibotYellow)
+		robots_yellow = (bigbotYellow, minibotYellow, bigbotRed, minibotRed)
 
-		#instance de l'hokuyo
-		hokuyo = hokuyo.Hokuyo(robots)
+		#lancement des subProcess IA
+		ProcessIA(robots_red)
+		ProcessIA(robots_yellow)
 
-		#instance de l'objet communication
-		com = communication.Communication(bigbot, minibot, hokuyo)
-
-		#bigrobot.init(engine)
-		"""minirobot.init(engine)
-		bigrobot2.init(engine)
-		minirobot2.init(engine)"""
-
+		#chargement de la map
 		maploader.load_map("map/map.xml",engine)
 
-		engine.add(bigbot)
-		engine.add(minibot)
-		engine.add(bigbot2)
-		engine.add(minibot2)
+		engine.add(bigbotRed)
+		engine.add(minibotRed)
+		engine.add(bigbotYellow)
+		engine.add(minibotYellow)
 
 		t=threading.Thread(target=engine.start)
 		t.setDaemon(True)
 		t.start()
 
-		#lancement du test de communication
-		com.testCom()
-
 		while not engine.e_stop.is_set():
 				try:
 						engine.e_stop.wait(3)
-						print("dans la boucle")
 				except KeyboardInterrupt:
 						engine.stop()
 						break

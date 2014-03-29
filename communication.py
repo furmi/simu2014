@@ -17,7 +17,7 @@ class Communication():
 		self.__bigrobot = bigrobot	#objet robot, afin d'envoyer les ordres
 		self.__minirobot = minirobot	#objet robot, afin d'envoyer les ordres
 		self.__orders_to_return = deque()	#structure de donnée contenant les ordres à renvoyer via readOrdersApi
-		self.__hokuyo = hokuyo
+		self.__hokuyo = hokuyo #objet de type Hokuyo
 
 	def sendOrderAPI(self, address, order, *arguments):
 		"""
@@ -52,7 +52,7 @@ class Communication():
 			order = None
 		if order is not None:
 			print(order)
-			return (order[0], order[1], order[2])
+			return order[0], order[1], order[2]
 		else:
 			return -1
 
